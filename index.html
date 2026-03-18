@@ -419,11 +419,12 @@
             </p>
             
             <div class="cta">
-                <form class="cta-form" id="signupForm">
-                    <input type="email" class="cta-input" placeholder="Enter your email" required>
+                <form class="cta-form" action="https://formspree.io/f/xaqplrrj" method="POST">
+                    <input type="email" class="cta-input" name="email" placeholder="Enter your email" required>
+                    <input type="hidden" name="_subject" value="New FaceRing Waitlist Signup">
+                    <input type="hidden" name="_captcha" value="false">
                     <button type="submit" class="cta-button">Join Waitlist</button>
                 </form>
-                <p class="cta-success" id="successMessage">✓ You're on the list! We'll be in touch soon.</p>
             </div>
         </section>
         
@@ -483,21 +484,6 @@
             <p>© 2026 FaceRing. All rights reserved.</p>
         </footer>
     </div>
-    </script>
-    
-    <script>
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('input').value;
-            
-            // Save to localStorage
-            const emails = JSON.parse(localStorage.getItem('facering_emails') || '[]');
-            emails.push({ email, date: new Date().toISOString() });
-            localStorage.setItem('facering_emails', JSON.stringify(emails));
-            
-            this.style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-        });
     </script>
 </body>
 </html>
