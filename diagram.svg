@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="doorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4a3728"/>
+      <stop offset="100%" style="stop-color:#2d1f15"/>
+    </linearGradient>
+    <linearGradient id="btnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b"/>
+      <stop offset="100%" style="stop-color:#ee5a5a"/>
+    </linearGradient>
+    <linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f09433"/>
+      <stop offset="25%" style="stop-color:#e6683c"/>
+      <stop offset="50%" style="stop-color:#dc2743"/>
+      <stop offset="75%" style="stop-color:#cc2366"/>
+      <stop offset="100%" style="stop-color:#bc1888"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bgGrad)"/>
+  
+  <!-- House Wall -->
+  <rect x="50" y="100" width="280" height="350" fill="#2a2a3e" rx="10"/>
+  <rect x="50" y="100" width="280" height="180" fill="url(#doorGrad)" rx="10"/>
+  
+  <!-- Door -->
+  <rect x="100" y="180" width="130" height="270" fill="#3d2914" rx="5"/>
+  <circle cx="210" cy="315" fill="#c9a227" r="8"/>
+  
+  <!-- Doorbell -->
+  <rect x="240" y="220" width="30" height="50" fill="#1a1a1a" rx="5"/>
+  <rect x="243" y="228" width="24" height="15" fill="url(#btnGrad)" rx="3"/>
+  <text x="255" y="238" font-size="8" fill="white" text-anchor="middle" font-family="Arial">🔔</text>
+  
+  <!-- Person 1 - Pressing doorbell -->
+  <g transform="translate(350, 180)">
+    <!-- Body -->
+    <ellipse cx="60" cy="200" rx="40" ry="50" fill="#4f46e5"/>
+    <!-- Head -->
+    <circle cx="60" cy="100" r="45" fill="#ffd5b4"/>
+    <!-- Hair -->
+    <ellipse cx="60" cy="65" rx="40" ry="25" fill="#2d1f15"/>
+    <!-- Face -->
+    <circle cx="45" cy="95" r="5" fill="#2d1f15"/>
+    <circle cx="75" cy="95" r="5" fill="#2d1f15"/>
+    <path d="M 50 115 Q 60 125 70 115" stroke="#2d1f15" stroke-width="3" fill="none"/>
+    <!-- Arm reaching -->
+    <path d="M 30 150 Q -30 180 -60 200" stroke="#ffd5b4" stroke-width="20" fill="none" stroke-linecap="round"/>
+    <!-- Hand on button -->
+    <ellipse cx="-65" cy="200" rx="15" ry="12" fill="#ffd5b4"/>
+  </g>
+  
+  <!-- Arrow 1 -->
+  <g transform="translate(460, 280)">
+    <path d="M 0 0 L 50 0" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 40 -10 L 50 0 L 40 10" stroke="#6366f1" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Camera snapshot -->
+  <g transform="translate(540, 220)">
+    <rect x="0" y="0" width="100" height="80" fill="#1a1a1a" rx="8"/>
+    <rect x="5" y="5" width="90" height="60" fill="#333" rx="4"/>
+    <circle cx="50" cy="35" r="20" fill="#222"/>
+    <circle cx="50" cy="35" r="15" fill="#111"/>
+    <circle cx="50" cy="35" r="8" fill="#6366f1"/>
+    <rect x="30" y="70" width="40" height="8" fill="#333" rx="2"/>
+    <!-- Flash effect -->
+    <circle cx="50" cy="35" r="25" fill="white" opacity="0.3">
+      <animate attributeName="opacity" values="0;0.5;0" dur="0.5s"/>
+    </circle>
+  </g>
+  
+  <!-- Arrow 2 -->
+  <g transform="translate(660, 280)">
+    <path d="M 0 0 L 50 0" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 40 -10 L 50 0 L 40 10" stroke="#6366f1" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Instagram Card -->
+  <g transform="translate(80, 320)">
+    <!-- Card -->
+    <rect x="0" y="0" width="280" height="160" fill="#1a1a1a" rx="16" stroke="#333" stroke-width="2"/>
+    <!-- Header -->
+    <circle cx="30" cy="30" r="18" fill="url(#instaGrad)"/>
+    <text x="30" y="35" font-size="16" fill="white" text-anchor="middle">📷</text>
+    <text x="58" y="28" font-size="14" fill="white" font-family="Arial" font-weight="bold">john_doe</text>
+    <text x="58" y="44" font-size="11" fill="#888" font-family="Arial">Instagram</text>
+    <!-- Photo area -->
+    <rect x="15" y="60" width="110" height="90" fill="#222" rx="8"/>
+    <!-- Silhouette -->
+    <ellipse cx="70" cy="95" rx="25" ry="30" fill="#444"/>
+    <circle cx="70" cy="72" r="18" fill="#444"/>
+    <!-- Verified badge -->
+    <circle cx="92" cy="32" r="8" fill="#3897f0"/>
+    <text x="92" y="36" font-size="8" fill="white" text-anchor="middle">✓</text>
+    <!-- Info -->
+    <text x="140" y="70" font-size="12" fill="#888" font-family="Arial">👤 Male, 28</text>
+    <text x="140" y="90" font-size="12" fill="#888" font-family="Arial">📍 San Francisco</text>
+    <text x="140" y="110" font-size="12" fill="#3897f0" font-family="Arial">🔗 johndoe.com</text>
+  </g>
+  
+  <!-- Phone notification -->
+  <g transform="translate(450, 350)">
+    <rect x="0" y="0" width="120" height="140" fill="#1a1a1a" rx="16" stroke="#333" stroke-width="2"/>
+    <rect x="40" y="8" width="40" height="6" fill="#333" rx="3"/>
+    <!-- Notification -->
+    <rect x="10" y="30" width="100" height="80" fill="#2a2a3e" rx="8"/>
+    <circle cx="30" cy="50" r="15" fill="url(#instaGrad)"/>
+    <text x="30" y="55" font-size="12" fill="white" text-anchor="middle">📷</text>
+    <text x="50" y="48" font-size="11" fill="white" font-family="Arial" font-weight="bold">john_doe</text>
+    <text x="50" y="62" font-size="9" fill="#888" font-family="Arial">at your door →</text>
+  </g>
+  
+  <!-- Labels -->
+  <text x="190" y="170" font-size="12" fill="#888" font-family="Arial" text-anchor="middle">Press</text>
+  <text x="590" y="200" font-size="12" fill="#888" font-family="Arial" text-anchor="middle">Capture</text>
+  <text x="220" y="310" font-size="13" fill="#f09433" font-family="Arial" text-anchor="middle">Instagram Profile Found!</text>
+  <text x="510" y="310" font-size="13" fill="#10b981" font-family="Arial" text-anchor="middle">Push to Phone</text>
+</svg>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaceRing — Smart Doorbell</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --surface-elevated: #1c1c1f;
+            --border: #2a2a2e;
+            --text: #fafafa;
+            --text-secondary: #8b8b8d;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.4);
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Background */
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            animation: drift 20s ease-in-out infinite;
+        }
+        
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5%, -5%) rotate(2deg); }
+        }
+        
+        .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        header {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(40px, 8vw, 72px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+        
+        h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 48px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* CTA */
+        .cta {
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+        
+        .cta-form {
+            display: flex;
+            gap: 12px;
+            max-width: 440px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .cta-input {
+            flex: 1;
+            min-width: 240px;
+            padding: 16px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .cta-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        
+        .cta-button {
+            padding: 16px 32px;
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,255,255,0.15);
+        }
+        
+        .cta-success {
+            display: none;
+            color: var(--success);
+            margin-top: 16px;
+            font-weight: 500;
+        }
+        
+        /* Features */
+        .features {
+            padding: 80px 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+        
+        /* How it works */
+        .how {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            max-width: 240px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step::after {
+            content: '→';
+            position: absolute;
+            right: -24px;
+            top: 40px;
+            color: var(--border);
+            font-size: 24px;
+        }
+        
+        .step:last-child::after {
+            display: none;
+        }
+        
+        .step-num {
+            width: 48px;
+            height: 48px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin: 0 auto 16px;
+        }
+        
+        .step h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .step p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero { padding: 60px 0 40px; }
+            .step::after { display: none; }
+            .steps { flex-direction: column; align-items: center; }
+            .step { max-width: 100%; }
+        }
+        
+        /* Glow animation */
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            filter: blur(150px);
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .glow-1 { top: 10%; left: 10%; }
+        .glow-2 { bottom: 20%; right: 10%; }
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <div class="grid"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">🔔</div>
+                FaceRing
+            </div>
+        </header>
+        
+        <section class="hero">
+            <div class="badge">
+                <span class="badge-dot"></span>
+                Beta Waitlist Open
+            </div>
+            
+            <h1>Know who's at<br>your <span class="highlight">door</span></h1>
+            
+            <p class="hero-desc">
+                FaceRing identifies every visitor the moment they ring your doorbell. 
+                Get notified with their Instagram, X (Twitter), TikTok and other open online profiles.
+            </p>
+            
+            <div class="cta">
+                <form class="cta-form" id="signupForm">
+                    <input type="email" class="cta-input" placeholder="Enter your email" required>
+                    <button type="submit" class="cta-button">Join Waitlist</button>
+                </form>
+                <p class="cta-success" id="successMessage">✓ You're on the list! We'll be in touch soon.</p>
+            </div>
+        </section>
+        
+        <section class="features">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>Face Recognition</h3>
+                    <p>Advanced AI instantly identifies visitors by matching faces against billions of public images across the web.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Social Profiles</h3>
+                    <p>See their Instagram, X (Twitter), TikTok and other open online profiles — understand who you're dealing with before opening the door.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Instant Alerts</h3>
+                    <p>Real-time push notifications the moment someone rings. Never miss a visitor, whether you're home or away.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="how">
+            <h2 class="section-title">How it works</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h4>Visitor Rings</h4>
+                    <p>Anyone presses your smart doorbell</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h4>Photo Captured</h4>
+                    <p>FaceRing takes a photo automatically</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h4>AI Analysis</h4>
+                    <p>Our AI identifies the person</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <h4>Social Info on Your Phone</h4>
+                    <p>Get Instagram, X, TikTok & more</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2026 FaceRing. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            
+            // Save to localStorage
+            const emails = JSON.parse(localStorage.getItem('facering_emails') || '[]');
+            emails.push({ email, date: new Date().toISOString() });
+            localStorage.setItem('facering_emails', JSON.stringify(emails));
+            
+            this.style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
